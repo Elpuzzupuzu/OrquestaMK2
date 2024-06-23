@@ -14,14 +14,14 @@
 <body>
     <h1 class="text-center p-3">Orquesta busqueda por id</h1>
 
-    <div class="container-fluid"  style="display: flex;">
+    <div class="container-fluid"  style="display: flex; ">
         <div class="row">
             <!-- Formulario para buscar músicos por ID -->
-            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST">
+            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST"   style="width: 150px; height: 50px;"    >
                 <h3 class="text-center text-secondary">Búsqueda por ID</h3>
                 <div class="mb-3" style="width: 150px; height: 50px;">
                     <label for="id" class="form-label">ID del Músico</label>
-                    <input type="number" class="form-control" style="width: 150px; height: 50px;" name="id" required>
+                    <input type="number" class="form-control" style="width: 150px; height: 50px;" name="id" required min="1">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 150px; height: 50px;">Buscar</button>
             </form>
