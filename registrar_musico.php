@@ -1,0 +1,39 @@
+<?php
+// Incluir la conexión a la base de datos
+include("conec.php");
+
+
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtener y limpiar los datos del formulario
+    $nombre = htmlspecialchars($_POST['nombre']);
+    $apellido = htmlspecialchars($_POST['apellido']);
+    $fecha_nacimiento = htmlspecialchars($_POST['fechanacimiento']);
+    $genero = htmlspecialchars($_POST['genero']);
+    $nacionalidad = htmlspecialchars($_POST['nacionalidad']);
+    $id_instrumento = intval($_POST['instrumento']); // Convertir a entero
+    $fecha_ingreso = htmlspecialchars($_POST['fechaingreso']);
+    $estado = isset($_POST['estado']) ? htmlspecialchars($_POST['estado']) : 'inactivo'; // Valor por defecto 'inactivo'
+    $id_programa = intval($_POST['temporada']); // Convertir a entero
+
+    // Preparar la consulta SQL para insertar datos
+    $stmt = $conection->prepare("INSERT INTO musicos (nombre, apellido, fecha_nacimiento, genero, nacionalidad, id_instrumento, fecha_ingreso, estado, lista_programa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    // Verificar si la consulta se preparó correctamente
+    if ($stmt === false) {
+        die('Error al preparar la consulta: ' . $conection->error);
+    }
+
+    // Asociar parámetros y ejecutar la consulta
+    $stmt->bind_param("sssssissi", $nombre, $apellido, $fecha_nacimiento, $genero, $nacionalidad, $id_instrumento, $fecha_ingreso, $estado, $id_programa);
+    if ($stmt->execute()) {
+        echo "Registro exitoso.";
+    } else {
+        echo "Error al registrar: " . $stmt->error;
+    }
+
+    // Cerrar la consulta y la conexión
+    $stmt->close();
+    $conection->close();
+}
+?>
