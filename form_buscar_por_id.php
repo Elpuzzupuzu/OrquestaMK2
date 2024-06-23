@@ -5,24 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orquesta CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .negative-margin {
+            margin-bottom: -10px; /* Ajusta el valor según tus necesidades */
+        }
+    </style>
 </head>
 <body>
-    <h1 class="text-center p-3">Orquesta CRUD</h1>
+    <h1 class="text-center p-3">Orquesta busqueda por id</h1>
 
-    <div class="container-fluid">
+    <div class="container-fluid"  style="display: flex;">
         <div class="row">
             <!-- Formulario para buscar músicos por ID -->
-            <form class="col-4 p-3" action="form_buscar_por_id.php" method="POST">
+            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST">
                 <h3 class="text-center text-secondary">Búsqueda por ID</h3>
-                <div class="mb-3">
+                <div class="mb-3" style="width: 150px; height: 50px;">
                     <label for="id" class="form-label">ID del Músico</label>
-                    <input type="number" class="form-control" name="id" required>
+                    <input type="number" class="form-control" style="width: 150px; height: 50px;" name="id" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-primary" style="width: 150px; height: 50px;">Buscar</button>
             </form>
 
             <!-- Tabla para mostrar todos los músicos -->
-            <div class="col-8 p-4">
+            <div class="col-8 p-4 negative-margin">
                 <table class="table">
                     <thead class="bg-info">
                         <tr>

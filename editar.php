@@ -37,13 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $sql->bind_param("sssssisssi", $nombre, $apellido, $fecha_nacimiento, $genero, $nacionalidad, $id_instrumento, $fecha_ingreso, $estado, $lista_programa, $id);
 
     if ($sql->execute()) {
-        echo "Músico actualizado correctamente.";
+        // Redirigir de vuelta a la página de búsqueda por ID
+        header('Location: form_buscar_por_id.php');
+        exit; // Asegurarse de que el script termine después de la redirección
     } else {
         die('Error al ejecutar la consulta: ' . $sql->error);
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
