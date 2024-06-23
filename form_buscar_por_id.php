@@ -37,8 +37,6 @@
                             <th scope="col">Estado</th>
                             <th scope="col">Id_programa</th>
                             <th scope="col"></th>
-                            
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -67,16 +65,16 @@
                                         <td><?= $datos->estado ?></td>
                                         <td><?= $datos->lista_programa ?></td>
                                         <td>
-                                            <a href="editar.php?id=<?= $datos->id_musico ?>">editar</a>
-                                            <a href="eliminar.php?id=<?= $datos->id_musico ?>">eliminar</a>
+                                            <a href="editar.php?id=<?= $datos->id_musico ?>" class="btn btn-warning btn-sm">Editar</a>
+                                            <a href="eliminar.php?id=<?= $datos->id_musico ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">Eliminar</a>
                                         </td>
                                     </tr>
                                 <?php }
                             } else {
-                                echo "<p>No se encontraron músicos con el ID especificado.</p>";
+                                echo "<tr><td colspan='11'>No se encontraron músicos con el ID especificado.</td></tr>";
                             }
                         } else {
-                            echo "<p>Por favor, proporcione un ID válido.</p>";
+                            echo "<tr><td colspan='11'>Por favor, proporcione un ID válido.</td></tr>";
                         }
                         ?>
                     </tbody>
