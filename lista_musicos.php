@@ -11,9 +11,6 @@
 
     <div class="container-fluid">
         <div class="row">
-            <!-- Modificar el formulario para que use el método POST y envíe los datos a registrar_musico.php -->
-
-            
             <div class="col-8 p-4">
                 <table class="table">
                     <thead class="bg-info">
@@ -28,26 +25,32 @@
                             <th scope="col">Fecha_Ingreso</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Id_programa</th>
-                            <th scope="col"></th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         include "conec.php";
-                        $sql = $conection->query("SELECT * FROM musicos ");
+                        
+                        // Llamar al procedimiento almacenado para obtener todos los músicos
+                        $sql = $conection->query("CALL ObtenerTodosLosMusicos()");
+                        
                         while ($datos = $sql->fetch_object()) { ?>
                             <tr>
-                                <td><?=$datos->id_musico?></td>
-                                <td><?=$datos->nombre?></td>
-                                <td><?=$datos->apellido?></td>
-                                <td><?=$datos->fecha_nacimiento?></td>
-                                <td><?=$datos->genero?></td>
-                                <td><?=$datos->nacionalidad?></td>
-                                <td><?=$datos->id_instrumento?></td>
-                                <td><?=$datos->fecha_ingreso?></td>
-                                <td><?=$datos->estado?></td>
-                                <td><?=$datos->lista_programa?></td>
-                                <td><a href="">editar</a> <a href="">eliminar</a></td>
+                                <td><?= $datos->id_musico ?></td>
+                                <td><?= $datos->nombre ?></td>
+                                <td><?= $datos->apellido ?></td>
+                                <td><?= $datos->fecha_nacimiento ?></td>
+                                <td><?= $datos->genero ?></td>
+                                <td><?= $datos->nacionalidad ?></td>
+                                <td><?= $datos->id_instrumento ?></td>
+                                <td><?= $datos->fecha_ingreso ?></td>
+                                <td><?= $datos->estado ?></td>
+                                <td><?= $datos->lista_programa ?></td>
+                                <td>
+                                    <a href="editar.php?id=<?= $datos->id_musico ?>" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="eliminar.php?id=<?= $datos->id_musico ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">Eliminar</a>
+                                </td>
                             </tr>
                         <?php } ?>
                     </tbody>
