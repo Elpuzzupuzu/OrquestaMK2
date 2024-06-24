@@ -91,11 +91,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                 </div>
                 <div class="mb-3">
                     <label for="estado" class="form-label">Estado</label>
-                    <input type="text" class="form-control" name="estado" value="<?php echo $musico->estado; ?>" required>
+                    <select class="form-select" id="estado" name="estado" required>
+                        <option value="Activo" <?php echo $musico->estado == 'Activo' ? 'selected' : ''; ?>>Activo</option>
+                        <option value="Inactivo" <?php echo $musico->estado == 'Inactivo' ? 'selected' : ''; ?>>Inactivo</option>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="temporada" class="form-label">ID de Programa</label>
-                    <input type="number" class="form-control" name="temporada" value="<?php echo $musico->lista_programa; ?>" required>
+                    <label for="temporada" class="form-label">Temporada</label>
+                    <select class="form-select" id="temporada" name="temporada" required>
+                        <option value="1" <?php echo $musico->lista_programa == 1 ? 'selected' : ''; ?>>Concierto de primavera</option>
+                        <option value="2" <?php echo $musico->lista_programa == 2 ? 'selected' : ''; ?>>Festival de Verano</option>
+                        <option value="3" <?php echo $musico->lista_programa == 3 ? 'selected' : ''; ?>>Recital de Otoño</option>
+                        <option value="4" <?php echo $musico->lista_programa == 4 ? 'selected' : ''; ?>>Gala de Invierno</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
             </form>
