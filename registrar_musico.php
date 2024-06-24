@@ -17,8 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_programa = intval($_POST['temporada']); // Convertir a entero
 
     // Preparar la consulta SQL para insertar datos
-    $stmt = $conection->prepare("INSERT INTO musicos (nombre, apellido, fecha_nacimiento, genero, nacionalidad, id_instrumento, fecha_ingreso, estado, lista_programa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+    $stmt = $conection->prepare("CALL RegistrarMusico(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+   
     // Verificar si la consulta se preparó correctamente
     if ($stmt === false) {
         die('Error al preparar la consulta: ' . $conection->error);
@@ -28,9 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssissi", $nombre, $apellido, $fecha_nacimiento, $genero, $nacionalidad, $id_instrumento, $fecha_ingreso, $estado, $id_programa);
     if ($stmt->execute()) {
         echo "Registro exitoso.";
+        header('Location: form_musico.php');
+        exit;
     } else {
         echo "Error al registrar: " . $stmt->error;
     }
+
+   
 
     // Cerrar la consulta y la conexión
     $stmt->close();
