@@ -6,11 +6,15 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-
 </head>
 <body>
-
+<?php
+session_start();
+if (isset($_SESSION['mensaje'])) {
+    echo "<div class='alert alert-success' role='alert'>" . $_SESSION['mensaje'] . "</div>";
+    unset($_SESSION['mensaje']); // Eliminar el mensaje después de mostrarlo
+}
+?>
 
 <form class="col-4 p-3" action="registrar_musico.php" method="POST">
     <h3 class="text-center text-secondary">Registro de músicos</h3>
@@ -79,14 +83,5 @@
     </div>
     <button type="submit" class="btn btn-primary">Registrar Músico</button>
 </form>
-
-
-
-
-
-
-
-
-    
 </body>
 </html>

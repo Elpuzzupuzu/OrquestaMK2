@@ -1,7 +1,7 @@
 <?php
 // Incluir la conexión a la base de datos
 include("conec.php");
-
+session_start(); // Iniciar la sesión
 
 // Verificar si se ha enviado el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -17,9 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_programa = intval($_POST['temporada']); // Convertir a entero
 
     // Preparar la consulta SQL para insertar datos
-
     $stmt = $conection->prepare("CALL RegistrarMusico(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-   
+
     // Verificar si la consulta se preparó correctamente
     if ($stmt === false) {
         die('Error al preparar la consulta: ' . $conection->error);
@@ -28,14 +27,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Asociar parámetros y ejecutar la consulta
     $stmt->bind_param("sssssissi", $nombre, $apellido, $fecha_nacimiento, $genero, $nacionalidad, $id_instrumento, $fecha_ingreso, $estado, $id_programa);
     if ($stmt->execute()) {
-        echo "Registro exitoso.";
+        $_SESSION['mensaje'] = "Registro exitoso."; // Guardar el mensaje en la sesión
         header('Location: form_musico.php');
         exit;
     } else {
-        echo "Error al registrar: " . $stmt->error;
+        $_SESSION['mensaje'] = "Error al registrar: " . $stmt->error; // Guardar el mensaje de error en la sesión
+        header('Location: form_musico.php');
+        exit;
     }
-
-   
 
     // Cerrar la consulta y la conexión
     $stmt->close();
