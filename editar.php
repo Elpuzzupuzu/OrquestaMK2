@@ -3,7 +3,7 @@ include "conec.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = intval($_GET['id']);
-    $sql = $conection->prepare("SELECT * FROM musicos WHERE id_musico = ?");
+    $sql = $conection->prepare("CALL BuscarMusicoPorID(?)");
     if ($sql === false) {
         die('Error en la preparación de la consulta SQL: ' . $conection->error);
     }
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $nacionalidad = $_POST['nacionalidad'];
     $id_instrumento = $_POST['instrumento'];
     $fecha_ingreso = $_POST['fechaingreso'];
-    $estado = $_POST['estado']; // El valor del radio button será 'activo' o 'inactivo'
+    $estado = $_POST['estado'];
     $lista_programa = $_POST['temporada'];
 
     // Ajustar el tipo de dato según la estructura de la tabla
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     if ($sql->execute()) {
         // Redirigir de vuelta a la página de búsqueda por ID
         header('Location: form_buscar_por_id.php');
-        exit; // Asegurarse de que el script termine después de la redirección
+        exit;
     } else {
         die('Error al ejecutar la consulta: ' . $sql->error);
     }
@@ -63,76 +63,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                 <h3 class="text-center text-secondary">Editar Músico</h3>
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $musico->nombre; ?>" required>
+                    <input type="text" class="form-control" name="nombre" value="<?php echo $musico->nombre; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="apellido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo $musico->apellido; ?>" required>
+                    <input type="text" class="form-control" name="apellido" value="<?php echo $musico->apellido; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="fechanacimiento" class="form-label">Fecha de Nacimiento</label>
-                    <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento" value="<?php echo $musico->fecha_nacimiento; ?>" required>
+                    <input type="date" class="form-control" name="fechanacimiento" value="<?php echo $musico->fecha_nacimiento; ?>">
                 </div>
                 <div class="mb-3">
                     <label for="genero" class="form-label">Género</label>
-                    <select class="form-select" id="genero" name="genero" required>
-                        <option value="masculino" <?php echo ($musico->genero == 'masculino') ? 'selected' : ''; ?>>Masculino</option>
-                        <option value="femenino" <?php echo ($musico->genero == 'femenino') ? 'selected' : ''; ?>>Femenino</option>
-                    </select>
+                    <input type="text" class="form-control" name="genero" value="<?php echo $musico->genero; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="nacionalidad" class="form-label">Nacionalidad</label>
-                    <input type="text" class="form-control" id="nacionalidad" name="nacionalidad" value="<?php echo $musico->nacionalidad; ?>" required>
+                    <input type="text" class="form-control" name="nacionalidad" value="<?php echo $musico->nacionalidad; ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label for="instrumento" class="form-label">Instrumento</label>
-                    <select class="form-select" id="instrumento" name="instrumento" required>
-                        <option value="1" <?php echo ($musico->id_instrumento == 1) ? 'selected' : ''; ?>>Violin</option>
-                        <option value="2" <?php echo ($musico->id_instrumento == 2) ? 'selected' : ''; ?>>Viola</option>
-                        <option value="3" <?php echo ($musico->id_instrumento == 3) ? 'selected' : ''; ?>>Violonchelo</option>
-                        <option value="4" <?php echo ($musico->id_instrumento == 4) ? 'selected' : ''; ?>>Contrabajo</option>
-                        <option value="5" <?php echo ($musico->id_instrumento == 5) ? 'selected' : ''; ?>>Arpa</option>
-                        <option value="6" <?php echo ($musico->id_instrumento == 6) ? 'selected' : ''; ?>>Flauta</option>
-                        <option value="7" <?php echo ($musico->id_instrumento == 7) ? 'selected' : ''; ?>>Oboe</option>
-                        <option value="8" <?php echo ($musico->id_instrumento == 8) ? 'selected' : ''; ?>>Clarinete</option>
-                        <option value="9" <?php echo ($musico->id_instrumento == 9) ? 'selected' : ''; ?>>Fagot</option>
-                        <option value="10" <?php echo ($musico->id_instrumento == 10) ? 'selected' : ''; ?>>Trompeta</option>
-                        <option value="11" <?php echo ($musico->id_instrumento == 11) ? 'selected' : ''; ?>>Trombón</option>
-                        <option value="12" <?php echo ($musico->id_instrumento == 12) ? 'selected' : ''; ?>>Tuba</option>
-                        <option value="13" <?php echo ($musico->id_instrumento == 13) ? 'selected' : ''; ?>>Corno</option>
-                        <option value="14" <?php echo ($musico->id_instrumento == 14) ? 'selected' : ''; ?>>Tambor</option>
-                        <option value="15" <?php echo ($musico->id_instrumento == 15) ? 'selected' : ''; ?>>Piano</option>
-                    </select>
+                    <label for="instrumento" class="form-label">ID del Instrumento</label>
+                    <input type="number" class="form-control" name="instrumento" value="<?php echo $musico->id_instrumento; ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label for="fechaingreso" class="form-label">Fecha de ingreso</label>
-                    <input type="date" class="form-control" id="fechaingreso" name="fechaingreso" value="<?php echo $musico->fecha_ingreso; ?>" required>
+                    <label for="fechaingreso" class="form-label">Fecha de Ingreso</label>
+                    <input type="date" class="form-control" name="fechaingreso" value="<?php echo $musico->fecha_ingreso; ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Estado</label>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="radio" id="activo" name="estado" value="activo" <?php echo ($musico->estado == 'activo') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="activo">Activo</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="radio" id="inactivo" name="estado" value="inactivo" <?php echo ($musico->estado == 'inactivo') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="inactivo">Inactivo</label>
-                    </div>
+                    <label for="estado" class="form-label">Estado</label>
+                    <input type="text" class="form-control" name="estado" value="<?php echo $musico->estado; ?>" required>
                 </div>
                 <div class="mb-3">
-                    <label for="temporada" class="form-label">Temporada</label>
-                    <select class="form-select" id="temporada" name="temporada" required>
-                        <option value="1" <?php echo ($musico->lista_programa == 1) ? 'selected' : ''; ?>>Concierto de primavera</option>
-                        <option value="2" <?php echo ($musico->lista_programa == 2) ? 'selected' : ''; ?>>Festival de Verano</option>
-                        <option value="3" <?php echo ($musico->lista_programa == 3) ? 'selected' : ''; ?>>Recital de Otoño</option>
-                        <option value="4" <?php echo ($musico->lista_programa == 4) ? 'selected' : ''; ?>>Gala de Invierno</option>
-                    </select>
+                    <label for="temporada" class="form-label">ID de Programa</label>
+                    <input type="number" class="form-control" name="temporada" value="<?php echo $musico->lista_programa; ?>" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Actualizar Músico</button>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
             </form>
         <?php } else { ?>
-            <p class="text-center">No se encontró el músico especificado.</p>
+            <p>No se encontró el músico especificado.</p>
         <?php } ?>
     </div>
+
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

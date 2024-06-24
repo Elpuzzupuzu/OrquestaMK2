@@ -12,12 +12,12 @@
     </style>
 </head>
 <body>
-    <h1 class="text-center p-3">Orquesta busqueda por id</h1>
+    <h1 class="text-center p-3">Orquesta búsqueda por id</h1>
 
     <div class="container-fluid"  style="display: flex; ">
         <div class="row">
             <!-- Formulario para buscar músicos por ID -->
-            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST"   style="width: 150px; height: 50px;"    >
+            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST" style="width: 150px; height: 50px;">
                 <h3 class="text-center text-secondary">Búsqueda por ID</h3>
                 <div class="mb-3" style="width: 150px; height: 50px;">
                     <label for="id" class="form-label">ID del Músico</label>
@@ -51,7 +51,7 @@
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
                             $id = intval($_POST['id']); // Asegúrate de que el ID es un número entero
 
-                            $sql = $conection->prepare("SELECT * FROM musicos WHERE id_musico = ?");
+                            $sql = $conection->prepare("CALL BuscarMusicoPorID(?)");
                             $sql->bind_param("i", $id);
                             $sql->execute();
                             $result = $sql->get_result();
