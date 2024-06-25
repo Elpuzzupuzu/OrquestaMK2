@@ -60,6 +60,7 @@
             <li><a href="form_musico.php" target="_blank">Registrar Músico</a></li>
             <li><a href="form_director.php" target="_blank">Registrar Director</a></li>
             <li><a href="form_buscar_por_id.php" target="_blank">Búsqueda por ID</a></li>
+            <li><a href="mostrar_auditoria.php" target="_blank">Auditoria</a></li>
         </ul>
     </div>
 </body>
