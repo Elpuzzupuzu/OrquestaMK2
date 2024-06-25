@@ -46,7 +46,7 @@
     </style>
 </head>
 <body>
-    <h1>lista directores</h1>
+    <h1>Lista de directores</h1>
 
     <div class="container-fluid">
         <div class="row">
@@ -69,7 +69,7 @@
                         $sql = $conection->query("CALL ObtenerTodosLosDirectores()");
                         
                         while ($datos = $sql->fetch_object()) { ?>
-                            <tr>
+                            <tr onmouseover="this.classList.add('table-primary')" onmouseout="this.classList.remove('table-primary')">
                                 <td><?= $datos->id_director ?></td>
                                 <td><?= $datos->nombre ?></td>
                                 <td><?= $datos->apellido ?></td>
@@ -88,5 +88,4 @@
 
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+</

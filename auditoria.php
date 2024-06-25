@@ -1,9 +1,17 @@
+<?php
+// Incluir el archivo de conexión
+include "conec.php";
+
+// Llamar al procedimiento almacenado para obtener los registros de auditoría de músicos
+$sql = $conection->query("CALL ObtenerAuditoriaMusicos2()");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orquesta</title>
+    <title>Orquesta - Auditoría de Músicos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
@@ -42,7 +50,7 @@
     </style>
 </head>
 <body>
-    <h1>Lista de músicos</h1>
+    <h1>Orquesta - Auditoría de Músicos</h1>
 
     <div class="container-fluid">
         <div class="row">
@@ -51,6 +59,8 @@
                     <thead class="bg-info">
                         <tr>
                             <th scope="col">Id</th>
+                            <th scope="col">Operación</th>
+                            <th scope="col">Id Músico</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
                             <th scope="col">Fecha Nacimiento</th>
@@ -60,17 +70,14 @@
                             <th scope="col">Fecha Ingreso</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Id Programa</th>
+                            <th scope="col">Fecha Registro</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        include "conec.php";
-                        
-                        // Llamar al procedimiento almacenado para obtener todos los músicos
-                        $sql = $conection->query("CALL ObtenerTodosLosMusicos()");
-                        
-                        while ($datos = $sql->fetch_object()) { ?>
-                            <tr onmouseover="this.classList.add('table-primary')" onmouseout="this.classList.remove('table-primary')">
+                        <?php while ($datos = $sql->fetch_object()) { ?>
+                            <tr>
+                                <td><?= $datos->id ?></td>
+                                <td><?= $datos->operacion ?></td>
                                 <td><?= $datos->id_musico ?></td>
                                 <td><?= $datos->nombre ?></td>
                                 <td><?= $datos->apellido ?></td>
@@ -81,7 +88,7 @@
                                 <td><?= $datos->fecha_ingreso ?></td>
                                 <td><?= $datos->estado ?></td>
                                 <td><?= $datos->lista_programa ?></td>
-                                <td></td>
+                                <td><?= $datos->fecha_registro ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
