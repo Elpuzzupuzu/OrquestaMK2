@@ -51,9 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     // Llamar al procedimiento almacenado para actualizar el músico
     if (empty($errors)) {
         if (actualizarMusico($conection, $id, $nombre, $apellido, $fecha_nacimiento, $genero, $nacionalidad, $id_instrumento, $fecha_ingreso, $estado, $lista_programa)) {
+            // Almacenar mensaje de éxito en sesión
+            session_start();
+            $_SESSION['mensaje'] = "El músico se actualizó correctamente.";
+
             // Redirigir de vuelta a la página de búsqueda por ID
             header('Location: form_buscar_por_id.php');
             exit;
+        } else {
+            $errors[] = "Error al actualizar el músico.";
         }
     }
 }
@@ -127,8 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                         <option value="2" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 2) || $musico->id_instrumento == 2 ? 'selected' : ''; ?>>Viola</option>
                         <option value="3" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 3) || $musico->id_instrumento == 3 ? 'selected' : ''; ?>>Violonchelo</option>
                         <option value="4" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 4) || $musico->id_instrumento == 4 ? 'selected' : ''; ?>>Contrabajo</option>
-                        <option value="5" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 5) || $musico->id_instrumento == 5 ? 'selected' : ''; ?>>Arpa</option>
-                        <option value="6" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 6) || $musico->id_instrumento == 6 ? 'selected' : ''; ?>>Flauta</option>
+                        <option value="5" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 5) || $musico->id_instrumento == 5 ? 'selected' : ''; ?>>Flauta</option>
+                        <option value="6" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 6) || $musico->id_instrumento == 6 ? 'selected' : ''; ?>>Clarinete</option>
                         <option value="7" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 7) || $musico->id_instrumento == 7 ? 'selected' : ''; ?>>Oboe</option>
                         <option value="8" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 8) || $musico->id_instrumento == 8 ? 'selected' : ''; ?>>Clarinete</option>
                         <option value="9" <?php echo (isset($_POST['instrumento']) && $_POST['instrumento'] == 9) || $musico->id_instrumento == 9 ? 'selected' : ''; ?>>Fagot</option>

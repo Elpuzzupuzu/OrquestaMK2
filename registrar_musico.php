@@ -28,16 +28,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssissi", $nombre, $apellido, $fecha_nacimiento, $genero, $nacionalidad, $id_instrumento, $fecha_ingreso, $estado, $id_programa);
     if ($stmt->execute()) {
         $_SESSION['mensaje'] = "Registro exitoso."; // Guardar el mensaje en la sesión
-        header('Location: form_musico.php');
-        exit;
     } else {
         $_SESSION['mensaje'] = "Error al registrar: " . $stmt->error; // Guardar el mensaje de error en la sesión
-        header('Location: form_musico.php');
-        exit;
     }
 
-    // Cerrar la consulta y la conexión
+    // Cerrar la consulta
     $stmt->close();
+    // Cerrar la conexión
     $conection->close();
+
+    // Redirigir después de completar la operación
+    header('Location: form_musico.php');
+    exit;
 }
 ?>
+

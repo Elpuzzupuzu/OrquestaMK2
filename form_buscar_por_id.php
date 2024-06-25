@@ -1,3 +1,15 @@
+<?php
+session_start(); // Iniciar sesión para obtener el mensaje de éxito
+
+// Verificar si hay un mensaje almacenado en la sesión
+if (isset($_SESSION['mensaje'])) {
+    $mensaje = $_SESSION['mensaje'];
+    unset($_SESSION['mensaje']); // Eliminar el mensaje para que no se muestre más de una vez
+} else {
+    $mensaje = '';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,20 +26,26 @@
 <body>
     <h1 class="text-center p-3">Orquesta búsqueda por id</h1>
 
-    <div class="container-fluid"  style="display: flex; ">
+    <div class="container-fluid" style="display: flex;">
         <div class="row">
             <!-- Formulario para buscar músicos por ID -->
-            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST" style="width: 150px; height: 50px;">
+            <form class="col-4 p-3 negative-margin" action="form_buscar_por_id.php" method="POST">
                 <h3 class="text-center text-secondary">Búsqueda por ID</h3>
-                <div class="mb-3" style="width: 150px; height: 50px;">
+                <div class="mb-3">
                     <label for="id" class="form-label">ID del Músico</label>
-                    <input type="number" class="form-control" style="width: 150px; height: 50px;" name="id" required min="1">
+                    <input type="number" class="form-control" name="id" required min="1" style="width: 150px;">
+
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 150px; height: 50px;">Buscar</button>
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
 
             <!-- Tabla para mostrar todos los músicos -->
             <div class="col-8 p-4 negative-margin">
+                <?php if (!empty($mensaje)) { ?>
+                    <div class="alert alert-success" role="alert">
+                        <?php echo $mensaje; ?>
+                    </div>
+                <?php } ?>
                 <table class="table">
                     <thead class="bg-info">
                         <tr>
