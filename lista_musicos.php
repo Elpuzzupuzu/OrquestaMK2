@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orquesta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Ajusta según necesites */
+            border: 1px solid #ccc; /* Para visualización */
+        }
+    </style>
 </head>
 <body>
     <h1 class="text-center p-3">Orquesta</h1>
@@ -47,7 +56,7 @@
                                 <td><?= $datos->fecha_ingreso ?></td>
                                 <td><?= $datos->estado ?></td>
                                 <td><?= $datos->lista_programa ?></td>
-                                <td>
+                                <td style="display:flex">
                                     <a href="editar.php?id=<?= $datos->id_musico ?>" class="btn btn-warning btn-sm">Editar</a>
                                     <a href="eliminar.php?id=<?= $datos->id_musico ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">Eliminar</a>
                                 </td>
