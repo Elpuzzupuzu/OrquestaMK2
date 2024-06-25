@@ -6,34 +6,60 @@
     <title>Orquesta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            background-color: #343a40;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
         .container-fluid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* Ajusta según necesites */
-            border: 1px solid #ccc; /* Para visualización */
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .table {
+            background-color: #ffffff;
+        }
+
+        .bg-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn {
+            margin-right: 5px;
         }
     </style>
 </head>
 <body>
-    <h1 class="text-center p-3">Orquesta</h1>
+    <h1>Orquesta</h1>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8 p-4">
-                <table class="table">
+            <div class="col-12">
+                <table class="table table-striped">
                     <thead class="bg-info">
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
-                            <th scope="col">Fecha_Nacimiento</th>
-                            <th scope="col">Genero</th>
+                            <th scope="col">Fecha Nacimiento</th>
+                            <th scope="col">Género</th>
                             <th scope="col">Nacionalidad</th>
-                            <th scope="col">id_instrumento</th>
-                            <th scope="col">Fecha_Ingreso</th>
+                            <th scope="col">Id Instrumento</th>
+                            <th scope="col">Fecha Ingreso</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Id_programa</th>
+                            <th scope="col">Id Programa</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
@@ -56,7 +82,7 @@
                                 <td><?= $datos->fecha_ingreso ?></td>
                                 <td><?= $datos->estado ?></td>
                                 <td><?= $datos->lista_programa ?></td>
-                                <td style="display:flex">
+                                <td>
                                     <a href="editar.php?id=<?= $datos->id_musico ?>" class="btn btn-warning btn-sm">Editar</a>
                                     <a href="eliminar.php?id=<?= $datos->id_musico ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">Eliminar</a>
                                 </td>
