@@ -13,122 +13,64 @@ $result = $conection->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auditoría de Músicos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-
-        h1 {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .container-fluid {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .table {
-            background-color: #fff;
-        }
-
-        .table th,
-        .table td {
-            vertical-align: middle;
-        }
-
-        .bg-info {
-            background-color: #17a2b8 !important;
-            color: white;
-        }
-
-        .btn {
-            margin-right: 5px;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
         .table-hover tbody tr:hover {
-            background-color: rgba(0, 0, 0, 0.075);
+            background-color: #f5f5f5;
         }
-
-        .table-primary:hover {
-            background-color: #b8daff !important;
-        }
-
-        .table-primary.selected {
-            background-color: #b8daff !important;
+        .table tbody tr.selected {
+            background-color: #d0e9c6;
+            transition: background-color 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <h1>Auditoría de Músicos</h1>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-striped table-hover">
-                    <thead class="bg-info">
-                        <tr>
-                            <th scope="col">ID Auditoría</th>
-                            <th scope="col">ID Músico</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Acción</th>
-                            <th scope="col">Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Verificar si hay resultados
-                        if ($result->num_rows > 0) {
-                            // Recorrer los resultados y mostrarlos en la tabla
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row['id_auditoria'] . "</td>";
-                                echo "<td>" . $row['id_musico'] . "</td>";
-                                echo "<td>" . $row['nombre'] . "</td>";
-                                echo "<td>" . $row['apellido'] . "</td>";
-                                echo "<td>" . $row['accion'] . "</td>";
-                                echo "<td>" . $row['fecha'] . "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='6' class='text-center'>No hay registros en la auditoría.</td></tr>";
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Auditoría de Músicos</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID Auditoría</th>
+                        <th>ID Músico</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Acción</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Verificar si hay resultados
+                    if ($result->num_rows > 0) {
+                        // Recorrer los resultados y mostrarlos en la tabla
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['id_auditoria'] . "</td>";
+                            echo "<td>" . $row['id_musico'] . "</td>";
+                            echo "<td>" . $row['nombre'] . "</td>";
+                            echo "<td>" . $row['apellido'] . "</td>";
+                            echo "<td>" . $row['accion'] . "</td>";
+                            echo "<td>" . $row['fecha'] . "</td>";
+                            echo "</tr>";
                         }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                    } else {
+                        echo "<tr><td colspan='6' class='text-center'>No hay registros en la auditoría.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // Script para resaltar fila seleccionada
-        document.addEventListener("DOMContentLoaded", function() {
-            const rows = document.querySelectorAll("tbody tr");
-
-            rows.forEach(row => {
-                row.addEventListener("click", () => {
-                    row.classList.toggle("table-primary");
-                    const isSelected = row.classList.contains("table-primary");
-                    rows.forEach(r => {
-                        if (r !== row) {
-                            r.classList.remove("table-primary");
-                        }
-                    });
-                });
+        // jQuery para resaltar la fila seleccionada
+        $(document).ready(function() {
+            $('.table tbody tr').on('click', function() {
+                $(this).toggleClass('selected').siblings().removeClass('selected');
             });
         });
     </script>
